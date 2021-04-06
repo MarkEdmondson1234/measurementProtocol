@@ -1,0 +1,27 @@
+Package: measurementProtocol
+Type: Package
+Version: 0.0.0.9000
+Title: Send data from R to the Google Analytics 4 Measurement Protocol v2 
+Description: Use R to send server-side tracking data to Google Analytics 4. 
+  <https://developers.google.com/analytics/devguides/collection/protocol/ga4>
+Authors@R: c(person("Mark", "Edmondson", email = "r@sunholo.com",
+                  role = c("aut", "cre"),
+                  comment = c(ORCID = "0000-0002-8434-3881")))
+URL: https://code.markedmondson.me/googleAnalyticsR/
+BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
+Depends:
+    R (>= 3.3.0)
+Imports:
+    assertthat (>= 0.2.0),
+    cli,
+    httr (>= 1.3.1),
+    jsonlite (>= 1.5),
+    rappdirs (>= 0.3.3)
+License: MIT + file LICENSE
+LazyData: TRUE
+RoxygenNote: 7.1.1
+Config/testthat/edition: 3
+Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
+Suggests: 
+    testthat (>= 3.0.0)
