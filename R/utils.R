@@ -26,19 +26,17 @@ rmNullObs <- function(x) {
 #' @import cli
 myMessage <- function(..., level = 2){
 
-  compare_level <- getOption("googleAuthR.verbose")
+  # implement level?
 
-  if(level >= compare_level){
-    time <- paste(Sys.time(),">")
-    mm <- paste(...)
-    if(grepl("^#", mm)){
-      cli::cli_h1(mm)
-    } else {
-      cli::cli_div(theme = list(span.time = list(color = "grey")))
-      cli::cli_alert_info("{.time {time}} {mm}")
-      cli::cli_end()
-    }
-
+  time <- paste(Sys.time(),">")
+  mm <- paste(...)
+  if(grepl("^#", mm)){
+    cli::cli_h1(mm)
+  } else {
+    cli::cli_div(theme = list(span.time = list(color = "grey")))
+    cli::cli_alert_info("{.time {time}} {mm}")
+    cli::cli_end()
   }
+
 
 }

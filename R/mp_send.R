@@ -117,8 +117,11 @@ mp_send <- function(
 
   my_verbose <- NULL
   if(debug_call){
-    myMessage("MP Request:", the_url,"\n",
-              toJSON(the_body, auto_unbox = TRUE, pretty = TRUE),
+    myMessage("MP Request:",
+              the_url,"\n",
+              toJSON(the_body,
+                     auto_unbox = TRUE,
+                     pretty = TRUE),
               level = 3)
 
     my_verbose <- verbose()

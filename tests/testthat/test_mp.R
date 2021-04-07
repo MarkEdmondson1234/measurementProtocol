@@ -1,7 +1,7 @@
 test_that("Measurement Protocol Hits",{
 
   # preferably set this in .Renviron
-  Sys.setenv(GA_MP_SECRET="MY_SECRET")
+  Sys.setenv(MP_SECRET="MY_SECRET")
 
   # your GA4 settings
   my_measurement_id <- "G-43MDXK6CLZ"

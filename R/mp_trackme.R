@@ -64,6 +64,7 @@ mp_trackme <- function(package){
 #' Package tracking opt-in startup message
 #'
 #' Place in .onAttach to have a message appear on first startup
+#' @param package The package to set-up tracking for
 #'
 #' @export
 #' @import assertthat

@@ -6,6 +6,9 @@
 \usage{
 mp_trackme_startup(package)
 }
+\arguments{
+\item{package}{The package to set-up tracking for}
+}
 \description{
 Place in .onAttach to have a message appear on first startup
 }
