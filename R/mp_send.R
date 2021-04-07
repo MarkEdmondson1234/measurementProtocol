@@ -92,6 +92,11 @@ mp_send <- function(
          call. = FALSE)
   }
 
+  # a single event - wrap in a list to make a json array
+  if(is.mp_event(events)){
+    events <- list(events)
+  }
+
   endpoint <- connection$endpoint
   if(debug_call) endpoint <- "https://www.google-analytics.com/debug/mp/collect"
   my_headers <- connection$preview_header
