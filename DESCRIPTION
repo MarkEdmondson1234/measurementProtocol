@@ -8,7 +8,7 @@ Authors@R: c(person("Mark", "Edmondson", email = "r@sunholo.com",
                   role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0002-8434-3881")))
 URL: https://code.markedmondson.me/googleAnalyticsR/
-BugReports: https://github.com/MarkEdmondson1234/googleAnalyticsR/issues
+BugReports: https://github.com/MarkEdmondson1234/measurementProtocol
 Depends:
     R (>= 3.3.0)
 Imports:
