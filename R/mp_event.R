@@ -94,7 +94,7 @@ mp_event_item <- function(
 ){
 
   if(all(is.null(item_id), is.null(item_name))){
-    stop("One of item_id or item_name is required")
+    stop("One of item_id or item_name is required", call. = FALSE)
   }
 
   structure(

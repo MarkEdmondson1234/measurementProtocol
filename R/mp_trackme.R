@@ -1,10 +1,18 @@
+.trackme <- new.env()
+.trackme$measurement_id <- "G-43MDXK6CLZ"
+.trackme$api <- "_hS_7VJARhqbCq9mF3oiNg"
+
+get_trackme_file <- function(package){
+  file.path(rappdirs::user_config_dir(package), "optin-tracking")
+}
+
 #' Opt in or out of package usage tracking
 #'
 #' You can opt-in or out to sending a measurement protocol hit when you load the package for use in the package's statistics via this function.  No personal data is collected.
 #'
 #' @export
 #' @rdname mp_trackme_event
-#' @param package_name The package you want to write in the setup messages
+#' @param package The package you want to track
 #'
 #' @examples
 #'
@@ -17,16 +25,15 @@
 #' @importFrom cli cli_h1 cli_alert_info
 mp_trackme <- function(package){
 
-  assert_that(is.string(package))
+  assert_that(is.string(package), nzchar(package))
 
   cli_h1("Tracking Consent for {package} usage")
-  cli_alert_info("This function opts you in or out of sending a tracking hit each time the library loads.  It is done using ga_trackme_event().")
+  cli_alert_info("This function opts you in or out of sending a tracking hit each time the library loads.")
   opt_in <- usethis::ui_yeah(
     sprintf("Do you opt in to tracking each time you load %s?", package)
   )
 
-  # this folder should exist as its used for gargle
-  the_file <- .trackme$filepath
+  the_file <- get_trackme_file(package)
 
   if(opt_in){
     if(file.exists(the_file)){
@@ -54,17 +61,31 @@ mp_trackme <- function(package){
     "No worries! If you change your mind run this function again.")
 }
 
-.trackme <- new.env()
-.trackme$measurement_id <- "G-43MDXK6CLZ"
-.trackme$api <- "_hS_7VJARhqbCq9mF3oiNg"
-.trackme$filepath <- file.path(rappdirs::user_config_dir("googleAnalyticsR"),
-                               "optin-googleanalyticsr")
+#' Package tracking opt-in startup message
+#'
+#' Place in .onAttach to have a message appear on first startup
+#'
+#' @export
+#' @import assertthat
+mp_trackme_startup <- function(package){
+  assert_that(
+    is.string(package), nzchar(package)
+  )
 
-#' Send a tracking hit for googleAnalyticsR package statistics
+  if(!file.exists(get_trackme_file(package)) && interactive()){
+    packageStartupMessage(
+      sprintf("You can opt in to tracking of your use of %s - see ?measurementProtocol::mp_trackme for details.", package)
+    )
+  }
+}
+
+
+
+#' Send a tracking hit for R package statistics
 #'
-#' If you opt in, `mp_trackme_event()` is the function that fires.  You can use `debug_call=TRUE` to see what would be sent before opting in or out.
+#' If you opt in, this is the function that fires.  You can use `debug_call=TRUE` to see what would be sent before opting in or out.
 #'
-#' Running `mp_trackme_event()` function will send a Measurement Protocol hit via [ga_mp_send] only if the `~/.R/optin-googleanalyticsr` file is present
+#' Running this function will send a Measurement Protocol hit via [mp_send] only if the cache file is present
 #'
 #' @param debug_call Set as a debug event to see what would be sent
 #' @param say_hello If you want to add your own custom message to the event sent, add it here!
@@ -74,21 +95,27 @@ mp_trackme <- function(package){
 #' @examples
 #'
 #' # this only works with a valid opt-in file present
-#' mp_trackme_event()
+#' mp_trackme_event("googleAnalyticsR")
 #'
 #' # see what data is sent
-#' mp_trackme_event(debug_call=TRUE)
+#' mp_trackme_event("googleAnalyticsR", debug_call=TRUE)
 #'
 #' # add your own message!
-#' mp_trackme_event(debug_call = TRUE, say_hello = "err hello Mark")
+#' mp_trackme_event("googleAnalyticsR",
+#'                  debug_call = TRUE,
+#'                  say_hello = "err hello Mark")
 #' @import assertthat
-mp_trackme_event <- function(debug_call = FALSE, say_hello = NULL){
+mp_trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
+
+  assert_that(
+    is.string(package), nzchar(package)
+  )
 
   if(!is.null(say_hello)){
     assert_that(is.string(say_hello))
   }
 
-  the_file <- .trackme$filepath
+  the_file <- get_trackme_file(package)
   if(!file.exists(the_file) & !debug_call){
     myMessage("No consent file found", level = 2)
     return(FALSE)
@@ -96,14 +123,14 @@ mp_trackme_event <- function(debug_call = FALSE, say_hello = NULL){
 
   ss <- utils::sessionInfo()
   event <- mp_event(
-    "googleanalyticsr_loaded",
+    "r_package_loaded",
     params = list(
       r_version = ss$R.version$version.string,
       r_platform = ss$platform,
       r_locale = ss$locale,
       r_system = ss$running,
       say_hello = say_hello,
-      package = paste("googleAnalyticsR",  utils::packageVersion("googleAnalyticsR"))
+      package = paste(package,  utils::packageVersion(package))
     )
   )
 
@@ -115,7 +142,10 @@ mp_trackme_event <- function(debug_call = FALSE, say_hello = NULL){
   }
 
 
-  if(is.null(.trackme$measurement_id) | is.null(.trackme$api)){
+  if(any(
+      is.null(.trackme$measurement_id),
+      is.null(.trackme$api))
+    ){
     myMessage("No tracking parameters found, setting dummy values", level = 3)
     m_id = "Measurement_ID"
     api = "API_secret"
@@ -128,14 +158,14 @@ mp_trackme_event <- function(debug_call = FALSE, say_hello = NULL){
 
   if(debug_call){
     return(mp_send(event, client_id = cid,
-                      connection = my_conn,
-                      debug_call = TRUE))
+                   connection = my_conn,
+                   debug_call = TRUE))
   }
   suppressMessages(
     mp_send(event, client_id = cid,
-               connection = my_conn,
-               debug_call = debug_call)
-    )
+            connection = my_conn,
+            debug_call = debug_call)
+  )
 
   cli::cli_alert_success("Sent library load tracking event")
 

@@ -143,9 +143,9 @@ mp_send <- function(
 
 #' Create a connection for Measurement Protocol v2
 #'
-#' Use [ga_mp_connection] to set up the Measurement Protocol connections to pass to [ga_mp_send].  If using Google Tag Manager Server-Side, you can also set up a custom endpoint.
+#' Use [mp_connection] to set up the Measurement Protocol connections to pass to [mp_send].  If using Google Tag Manager Server-Side, you can also set up a custom endpoint.
 #'
-#' @param api_secret The secret generated in the GA4 UI - by default will look for environment arg `GA_MP_SECRET`
+#' @param api_secret The secret generated in the GA4 UI - by default will look for environment arg `MP_SECRET`
 #' @param measurement_id The measurement ID associated with a stream
 #' @param endpoint If NULL will use Google default, otherwise set to the URL of your Measurement Protocol custom endpoint
 #' @param preview_header Only needed for custom endpoints. The `X-Gtm-Server-Preview` HTTP Header found in your GTM debugger

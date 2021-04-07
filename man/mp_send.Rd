@@ -42,7 +42,7 @@ mp_connection(
 
 \item{measurement_id}{The measurement ID associated with a stream}
 
-\item{api_secret}{The secret generated in the GA4 UI - by default will look for environment arg \code{GA_MP_SECRET}}
+\item{api_secret}{The secret generated in the GA4 UI - by default will look for environment arg \code{MP_SECRET}}
 
 \item{endpoint}{If NULL will use Google default, otherwise set to the URL of your Measurement Protocol custom endpoint}
 
@@ -55,7 +55,7 @@ mp_connection(
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Create a server side call to Google Analytics 4 via its Measurement Protocol
 
-Use \link{ga_mp_connection} to set up the Measurement Protocol connections to pass to \link{ga_mp_send}.  If using Google Tag Manager Server-Side, you can also set up a custom endpoint.
+Use \link{mp_connection} to set up the Measurement Protocol connections to pass to \link{mp_send}.  If using Google Tag Manager Server-Side, you can also set up a custom endpoint.
 }
 \details{
 Create an API secret via \verb{Admin > Data Streams > choose your stream > Measurement Protocol > Create}

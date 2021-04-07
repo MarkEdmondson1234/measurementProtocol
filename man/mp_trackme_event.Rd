@@ -7,22 +7,22 @@
 \usage{
 mp_trackme(package)
 
-mp_trackme_event(debug_call = FALSE, say_hello = NULL)
+mp_trackme_event(package, debug_call = FALSE, say_hello = NULL)
 }
 \arguments{
+\item{package}{The package you want to track}
+
 \item{debug_call}{Set as a debug event to see what would be sent}
 
 \item{say_hello}{If you want to add your own custom message to the event sent, add it here!}
-
-\item{package_name}{The package you want to write in the setup messages}
 }
 \description{
 You can opt-in or out to sending a measurement protocol hit when you load the package for use in the package's statistics via this function.  No personal data is collected.
 
-If you opt in, \code{mp_trackme_event()} is the function that fires.  You can use \code{debug_call=TRUE} to see what would be sent before opting in or out.
+If you opt in, this is the function that fires.  You can use \code{debug_call=TRUE} to see what would be sent before opting in or out.
 }
 \details{
-Running \code{mp_trackme_event()} function will send a Measurement Protocol hit via \link{ga_mp_send} only if the \verb{~/.R/optin-googleanalyticsr} file is present
+Running this function will send a Measurement Protocol hit via \link{mp_send} only if the cache file is present
 }
 \examples{
 
@@ -32,11 +32,13 @@ if(interactive()){
 }
 
 # this only works with a valid opt-in file present
-mp_trackme_event()
+mp_trackme_event("googleAnalyticsR")
 
 # see what data is sent
-mp_trackme_event(debug_call=TRUE)
+mp_trackme_event("googleAnalyticsR", debug_call=TRUE)
 
 # add your own message!
-mp_trackme_event(debug_call = TRUE, say_hello = "err hello Mark")
+mp_trackme_event("googleAnalyticsR",
+                 debug_call = TRUE,
+                 say_hello = "err hello Mark")
 }
