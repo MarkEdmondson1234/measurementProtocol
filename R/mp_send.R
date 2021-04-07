@@ -168,7 +168,7 @@ mp_connection <- function(measurement_id,
   assert_that(
     is.string(measurement_id),
     is.string(api_secret),
-    !nzchar(api_secret)
+    nzchar(api_secret)
   )
 
   the_endpoint <- "https://www.google-analytics.com/mp/collect"
@@ -185,7 +185,7 @@ mp_connection <- function(measurement_id,
   if(!is.null(preview_header)){
     assert_that(
       is.string(preview_header),
-      !nzchar(preview_header))
+      nzchar(preview_header))
 
     my_headers <- add_headers("X-Gtm-Server-Preview" = preview_header)
   }
