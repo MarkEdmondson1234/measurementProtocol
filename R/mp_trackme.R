@@ -107,6 +107,21 @@ mp_trackme_startup <- function(package){
 #' @import assertthat
 mp_trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
 
+  # extra cautious as this function can prevent package load
+  tryCatch(
+    trackme_event(package = package,
+                  debug_call = debug_call,
+                  say_hello = say_hello),
+    error = function(err){
+      warning("Error on package load with mp_trackme_event: ", err$message)
+      NULL
+    }
+  )
+
+}
+
+#' @import assertthat
+trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
   assert_that(
     is.string(package), nzchar(package)
   )
@@ -118,6 +133,7 @@ mp_trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
   the_file <- get_trackme_file(package)
   if(!file.exists(the_file) & !debug_call){
     myMessage("No consent file found", level = 2)
+    mp_trackme_startup(package)
     return(FALSE)
   }
 
@@ -143,9 +159,9 @@ mp_trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
 
 
   if(any(
-      is.null(.trackme$measurement_id),
-      is.null(.trackme$api))
-    ){
+    is.null(.trackme$measurement_id),
+    is.null(.trackme$api))
+  ){
     myMessage("No tracking parameters found, setting dummy values", level = 3)
     m_id = "Measurement_ID"
     api = "API_secret"
@@ -168,5 +184,4 @@ mp_trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
   )
 
   cli::cli_alert_success("Sent library load tracking event")
-
 }
