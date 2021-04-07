@@ -31,7 +31,7 @@ To enable package tracking in your R package you need the following:
 .trackme$measurement_id <- "G-1234"
 .trackme$api <- "_hS_7VJXXXXXXX"
 ```
-2. In an `.onAttach` startup function add two functions or functions that wrap them: `mp_trackme_startup()` which will check for an opt-in file and send a message if it is not present, and `mp_trackme_event()` with your package name that will send the tracking event.
+2. In an `.onAttach` startup function add two functions or functions that wrap them: `mp_trackme_startup()` which will check for an opt-in file and send a message if it is not present, and `mp_trackme_event()` with your package name that will send the tracking event if they have opted-in.
 
 ```r
 .onAttach <- function(libname, pkgname){
