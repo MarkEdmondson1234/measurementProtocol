@@ -1,0 +1,14 @@
+title: "measurementProtocol"
+url: https://code.markedmondson.me/measurementProtocol/
+authors:
+  name: Mark Edmondson
+  href: https://code.markedmondson.me
+home:
+  strip_header: true
+template:
+  params:
+    bootswatch: paper
+    ganalytics: UA-47480439-2
+navbar:
+  title: measurementProtocol
+  inverse: true
