@@ -54,6 +54,21 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/measurement-protocol-v2.html">Measurement Protocol v2</a>
+    </li>
+    <li>
+      <a href="articles/package-tracking.html">Package Tracking</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
@@ -95,35 +110,7 @@
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>Documentation on <code>googleAnalyticsR</code> dev website: <a href="https://code.markedmondson.me/googleAnalyticsR/dev/articles/measurement-protocol-v2.html" class="uri">https://code.markedmondson.me/googleAnalyticsR/dev/articles/measurement-protocol-v2.html</a></p>
-</div>
-<div id="package-tracking" class="section level2">
-<h2 class="hasAnchor">
-<a href="#package-tracking" class="anchor"></a>Package Tracking</h2>
-<p>To enable package tracking in your R package you need the following:</p>
-<ol>
-<li>Add your API secret and measurementId to a <code>.trackme</code> environment within your package. These are public so it is possible for people to use them to send data.</li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">.trackme</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">new.env</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">.trackme</span><span class="op">$</span><span class="va">measurement_id</span> <span class="op">&lt;-</span> <span class="st">"G-1234"</span>
-<span class="va">.trackme</span><span class="op">$</span><span class="va">api</span> <span class="op">&lt;-</span> <span class="st">"_hS_7VJXXXXXXX"</span></code></pre></div>
-<ol>
-<li>In an <code>.onAttach</code> start-up function add: <code><a href="reference/mp_trackme.html">measurementProtocol::mp_trackme_event()</a></code> which will check for an opt-in file and send a message if it is not present, or if it is present will send the tracking event.</li>
-</ol>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">.onAttach</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">libname</span>, <span class="va">pkgname</span><span class="op">)</span><span class="op">{</span>
-  <span class="fu">measurementProtocol</span><span class="fu">::</span><span class="fu"><a href="reference/mp_trackme.html">mp_trackme_event</a></span><span class="op">(</span><span class="va">pkgname</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<ol>
-<li>Document usage of <code><a href="reference/mp_trackme.html">mp_trackme()</a></code> (or a wrapper function) that will let end-users opt in to tracking.</li>
-</ol>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mp_trackme.html">mp_trackme</a></span><span class="op">(</span><span class="st">"yourPackage"</span><span class="op">)</span></code></pre></div>
-<p>Since you know the package name, it is recommended to wrap the functions above with the package filled in e.g.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">optin_tracking_mypackage</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span>
-  <span class="fu"><a href="reference/mp_trackme.html">mp_trackme</a></span><span class="op">(</span><span class="st">"yourPackage"</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<p>You need a <a href="https://support.google.com/analytics/answer/10089681?hl=en">GA4 account</a> to send the hits to.</p>
 </div>
 </div>
   </div>
