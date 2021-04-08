@@ -1,5 +1,11 @@
 library(googleCloudRunner)
 
-cr_deploy_pkgdown("MarkEdmondson1234/measurementProtocol",
+repo <- "MarkEdmondson1234/measurementProtocol"
+cr_deploy_pkgdown(repo,
                   secret = "github-ssh",
                   cloudbuild_file = "cloud_build/pkgdown.yml")
+
+cr_deploy_packagetests(
+  cloudbuild_file = "cloud_build/testthat.yml",
+  trigger_repo = cr_buildtrigger_repo(repo,branch = "^master$")
+)
