@@ -1,10 +1,5 @@
 ---
 title: "Package Tracking"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{package-tracking}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
