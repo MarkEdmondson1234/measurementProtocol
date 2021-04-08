@@ -4,3 +4,4 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^cloud_build$
