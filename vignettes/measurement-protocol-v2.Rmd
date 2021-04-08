@@ -1,0 +1,172 @@
+---
+title: "Measurement Protocol v2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{measurement-protocol-v2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(measurementProtocol)
+```
+
+## Sending hits from R to Google Analytics 4 properties via the Measurement Protocol v2
+
+From the [Google docs](https://developers.google.com/analytics/devguides/collection/protocol/ga4):
+
+The Google Analytics Measurement Protocol for Google Analytics 4 allows developers to make HTTP requests to send events directly to Google Analytics servers. This allows developers to measure how users interact with their business from any HTTP-enabled environment. Notably, this makes it easy to measure interactions that happen server-to-server.
+
+Using the `mp_send()` function you can send tracking hits from any R environment that is connected to HTTP.  This can be used in variety of ways including R package tracking; extracting user data then running statistical analysis on GA4 user data and sending it back into GA4; server side tracking implementations of R web apps such as Shiny.
+
+`googleAnalyticsR` includes opt-in GA4 tracking of the package usage via the `ga_trackme()` function.
+
+## Sending GA4 hits from R
+
+To send hits you need: 
+
+1. A GA4 account
+2. A valid GA4 measurement Id
+3. A secret API key.
+   - Create an API secret in your GA4 interface via `Admin > Data Streams > choose your stream > Measurement Protocol > Create`
+4. A client Id for that user - use `mp_cid()` if you don't have one already
+5. Configure custom definitions in GA4 for the events you want to send
+   - See `Custom definitions > Create custom dimensions` 
+
+An example is shown then example below:
+
+```r
+# preferably set this in .Renviron
+Sys.setenv(mp_SECRET="MY_SECRET")
+
+# your GA4 settings
+my_measurement_id <- "G-43MDXK6CLZ"
+
+# create a connection object
+my_connection <- mp_connection(my_measurement_id)
+
+# a random clientId
+a_client_id <- mp_cid()
+
+event <- mp_event("an_event")
+
+# send to debug endpoint first to validate the hit
+mp_send(event, a_client_id, my_connection, debug_call = TRUE)
+
+another <- mp_event("another_event")
+
+# send a real hit - batched together
+mp_send(list(event, another), 
+        a_client_id, my_measurement_id)
+
+# you can see sent events in the real-time reports to check its working
+my_property_id <- 206670707
+ga_data(my_property_id, 
+        dimensions = "eventName", 
+        metrics = "eventCount", 
+        dimensionFilter = ga_data_filter(
+           eventName == c("an_event","another_event")),
+        realtime = TRUE)
+```
+
+### Configuration of GA4
+
+Once the API secret is created you can put it in an .Renviron file for the `mp_SECRET` so you do not need to supply it in the R code for security.
+
+You also need a clientId, which is the ID associated with the user creating the hits.  Be aware of privacy laws when creating this - for example ePrivacy in the EU dictates you must get consent to associate an ID with a user.  If the clientId is the same as other streams into your GA4 account (e.g. website, mobile apps), the hits you send will be associated with the same user.
+
+Once you have those then you need to decide what event you want to send in. To see event parameters in your GA4 reports, create custom fields in your GA4 account first, after which you can see them in your reports 24hrs after you send them - - `dimension name` will be the label in the reports, `event parameter` will be the parameter you have sent in with the event. 
+
+### Creating the connection object
+
+The connection is configured with the API secret and your measurementId. Ideally the API secret should be set in your `.Renviron` file via environment argument `mp_SECRET` 
+
+```r
+# preferably set this in .Renviron
+Sys.setenv(mp_SECRET="MY_SECRET")
+
+# your GA4 settings
+my_measurement_id <- "G-1234"
+
+my_connection <- mp_connection(my_measurement_id)
+```
+
+By default it will send the hits to `https://www.google-analytics.com/mp/collect`. To send to the debug URL `https://www.google-analytics.com/debug/mp/collect"` specify `debug_call=TRUE` in the `mp_send()` function. 
+
+If you have a custom endpoint (say you are running GTM Server Side) then you can override this URL.  In that case you will also want to see your hits appear in the GTM Server Side debugger, which requires a `X-Gtm-Server-Preview` header added to the request.  When in your debugger Web UI's Preview mode, select from the top right menu "send requests manually" to find your header value and put into the connection like below:
+
+```r
+my_custom_connection <- mp_connection(
+    my_measurement_id,
+    endpoint = "https://gtm.example.com",
+    preview_header = "ZW52LTV8OWdPOExNWFkYjA0Njk4NmQ="
+)
+```
+
+### Sending the GA4 hit via R
+
+You construct an event via `mp_event()` - a simple one may be `mp_event("an_event")`
+
+```{r}
+mp_event("an_event")
+```
+
+Refer to the [Events documentation](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events) on what you can send in.
+
+Once you have an event you can test it will show up when you send via `mp_send()` by setting `debug_call=TRUE`
+
+```{r}
+my_connection <- mp_connection("G-1234")
+a_client_id <- mp_cid()
+
+event <- mp_event("an_event")
+mp_send(event, a_client_id, my_connection, debug_call = TRUE)
+```
+
+You can send many events in on send:
+
+```{r}
+another <- mp_event("another_event")
+mp_send(list(event, another), 
+           a_client_id, 
+           my_connection, 
+           debug_call = TRUE)
+```
+
+Events are flexible with the number of parameters you send with the event name - this allows for rich data streams.  The data parameters can be added via the `params` argument and accepts (nested) named R lists:
+
+```{r}
+mp_event("event_with_params", params = list(my_param = "hello", my_param2 = "mum"))
+```
+
+If you are making product item style hits, the helper function `mp_event_item()` helps you construct them:
+
+```{r}
+# one item
+mp_event_item(item_name = "jeggings", 
+                 price = 8.88, 
+                 item_variant = "Black")
+                 
+# many items in a list
+items <- list(
+  mp_event_item(item_id = "SKU_12345", 
+                   price = 9.99, 
+                   item_brand = "Gucci"), 
+  mp_event_item(item_name = "jeggings", 
+                   price = 8.88, 
+                   item_variant = "Black"))
+                   
+# construct an event with its own fields
+mp_event("add_payment_info", 
+            params = list(coupon = "SUMMER_FUN", 
+                          payment_type = "Credit Card", 
+                          value = 7.77, 
+                          currency = "USD"), 
+            items = items)
+```
+

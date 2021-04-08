@@ -2,13 +2,15 @@
 % Please edit documentation in R/mp_trackme.R
 \name{mp_trackme_startup}
 \alias{mp_trackme_startup}
-\title{Package tracking opt-in startup message}
+\title{Package tracking opt-in start-up message}
 \usage{
-mp_trackme_startup(package)
+mp_trackme_startup(package, opt_in_function)
 }
 \arguments{
 \item{package}{The package to set-up tracking for}
+
+\item{opt_in_function}{The name of the function for a user to opt-in}
 }
 \description{
-Place in .onAttach to have a message appear on first startup
+Place in .onAttach to have a message appear on first start-up
 }

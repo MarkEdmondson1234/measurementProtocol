@@ -2,6 +2,14 @@
 .trackme$measurement_id <- "G-43MDXK6CLZ"
 .trackme$api <- "_hS_7VJARhqbCq9mF3oiNg"
 
+#' Tracking opt-in for this package
+#'
+#' This is the opt-in function for this package, using [mp_trackme]
+#' @export
+mp_opt_in <- function(){
+  mp_trackme("measurementProtocol")
+}
+
 get_trackme_file <- function(package){
   file.path(rappdirs::user_config_dir(package), "optin-tracking")
 }
@@ -20,22 +28,30 @@ get_trackme_file <- function(package){
 #' if(interactive()){
 #'   mp_trackme()
 #' }
-#' @importFrom usethis ui_yeah
 #' @import assertthat
 #' @importFrom cli cli_h1 cli_alert_info
+#' @importFrom utils menu
 mp_trackme <- function(package){
 
   assert_that(is.string(package), nzchar(package))
 
   cli_h1("Tracking Consent for {package} usage")
   cli_alert_info("This function opts you in or out of sending a tracking hit each time the library loads.")
-  opt_in <- usethis::ui_yeah(
-    sprintf("Do you opt in to tracking each time you load %s?", package)
+
+  opt_in <- menu(
+    title = sprintf("Do you opt in to tracking each time you load %s?", package),
+    choices = c("Yes","No")
   )
+
+  answer <- FALSE
+  if(opt_in == 1){
+    answer <- TRUE
+  }
 
   the_file <- get_trackme_file(package)
 
-  if(opt_in){
+  if(answer){
+    # opt-in
     if(file.exists(the_file)){
       cli::cli_alert_info("Opt-in file {the_file} already found - no more action needed")
       return(invisible(NULL))
@@ -52,6 +68,8 @@ mp_trackme <- function(package){
     return(invisible(NULL))
   }
 
+  # opt-out
+
   if(file.exists(the_file)){
     cli::cli_alert_info("Found {the_file} - deleting as you have opted-out")
     unlink(the_file)
@@ -61,21 +79,28 @@ mp_trackme <- function(package){
     "No worries! If you change your mind run this function again.")
 }
 
-#' Package tracking opt-in startup message
+#' Package tracking opt-in start-up message
 #'
-#' Place in .onAttach to have a message appear on first startup
+#' Place in .onAttach to have a message appear on first start-up
 #' @param package The package to set-up tracking for
-#'
+#' @param opt_in_function The name of the function for a user to opt-in
 #' @export
 #' @import assertthat
-mp_trackme_startup <- function(package){
+mp_trackme_startup <- function(package, opt_in_function){
+
+  if(is.null(opt_in_function)){
+    opt_in_function <- "measurementProtocol::mp_trackme"
+  }
+
   assert_that(
-    is.string(package), nzchar(package)
+    is.string(package), nzchar(package),
+    is.string(opt_in_function)
   )
 
   if(!file.exists(get_trackme_file(package)) && interactive()){
     packageStartupMessage(
-      sprintf("You can opt in to tracking of your use of %s - see ?measurementProtocol::mp_trackme for details.", package)
+      sprintf("You can opt in to tracking of your use of %s - see ?%s for details.",
+              package, opt_in_function)
     )
   }
 }
@@ -87,7 +112,8 @@ mp_trackme_startup <- function(package){
 #' If you opt in, this is the function that fires.  You can use `debug_call=TRUE` to see what would be sent before opting in or out.
 #'
 #' Running this function will send a Measurement Protocol hit via [mp_send] only if the cache file is present
-#'
+#' @param package The package name
+#' @param opt_in_function The name of the function for a user to opt-in
 #' @param debug_call Set as a debug event to see what would be sent
 #' @param say_hello If you want to add your own custom message to the event sent, add it here!
 #'
@@ -105,14 +131,24 @@ mp_trackme_startup <- function(package){
 #' mp_trackme_event("googleAnalyticsR",
 #'                  debug_call = TRUE,
 #'                  say_hello = "err hello Mark")
+#'
+#' # placed in .onAttach with function name
+#' .onAttach <- function(libname, pkgname){
+#'   measurementProtocol::mp_trackme_event(pkgname, opt_in_function = "mp_opt_in")
+#'  }
+#'
 #' @import assertthat
-mp_trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
+mp_trackme_event <- function(package,
+                             debug_call = FALSE,
+                             say_hello = NULL,
+                             opt_in_function = NULL){
 
   # extra cautious as this function can prevent package load
   tryCatch(
     trackme_event(package = package,
                   debug_call = debug_call,
-                  say_hello = say_hello),
+                  say_hello = say_hello,
+                  opt_in_function = opt_in_function),
     error = function(err){
       warning("Error on package load with mp_trackme_event: ", err$message)
       NULL
@@ -122,7 +158,10 @@ mp_trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
 }
 
 #' @import assertthat
-trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
+trackme_event <- function(package,
+                          debug_call = FALSE,
+                          say_hello = NULL,
+                          opt_in_function = NULL){
   assert_that(
     is.string(package), nzchar(package)
   )
@@ -134,7 +173,7 @@ trackme_event <- function(package, debug_call = FALSE, say_hello = NULL){
   the_file <- get_trackme_file(package)
   if(!file.exists(the_file) & !debug_call){
     myMessage("No consent file found", level = 2)
-    mp_trackme_startup(package)
+    mp_trackme_startup(package, opt_in_function = opt_in_function)
     return(FALSE)
   }
 

@@ -7,14 +7,21 @@
 \usage{
 mp_trackme(package)
 
-mp_trackme_event(package, debug_call = FALSE, say_hello = NULL)
+mp_trackme_event(
+  package,
+  debug_call = FALSE,
+  say_hello = NULL,
+  opt_in_function = NULL
+)
 }
 \arguments{
-\item{package}{The package you want to track}
+\item{package}{The package name}
 
 \item{debug_call}{Set as a debug event to see what would be sent}
 
 \item{say_hello}{If you want to add your own custom message to the event sent, add it here!}
+
+\item{opt_in_function}{The name of the function for a user to opt-in}
 }
 \description{
 You can opt-in or out to sending a measurement protocol hit when you load the package for use in the package's statistics via this function.  No personal data is collected.
@@ -41,4 +48,10 @@ mp_trackme_event("googleAnalyticsR", debug_call=TRUE)
 mp_trackme_event("googleAnalyticsR",
                  debug_call = TRUE,
                  say_hello = "err hello Mark")
+
+# placed in .onAttach with function name
+.onAttach <- function(libname, pkgname){
+  measurementProtocol::mp_trackme_event(pkgname, opt_in_function = "mp_opt_in")
+ }
+
 }
