@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Package tracking opt-in startup message — mp_trackme_startup • measurementProtocol</title>
+<title>Package tracking opt-in start-up message — mp_trackme_startup • measurementProtocol</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Package tracking opt-in startup message — mp_trackme_startup" />
-<meta property="og:description" content="Place in .onAttach to have a message appear on first startup" />
+<meta property="og:title" content="Package tracking opt-in start-up message — mp_trackme_startup" />
+<meta property="og:description" content="Place in .onAttach to have a message appear on first start-up" />
 
 
 
@@ -97,6 +97,21 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/measurement-protocol-v2.html">Measurement Protocol v2</a>
+    </li>
+    <li>
+      <a href="../articles/package-tracking.html">Package Tracking</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -121,16 +136,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Package tracking opt-in startup message</h1>
+    <h1>Package tracking opt-in start-up message</h1>
     <small class="dont-index">Source: <a href='https://github.com/MarkEdmondson1234/measurementProtocol/blob/master/R/mp_trackme.R'><code>R/mp_trackme.R</code></a></small>
     <div class="hidden name"><code>mp_trackme_startup.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Place in .onAttach to have a message appear on first startup</p>
+    <p>Place in .onAttach to have a message appear on first start-up</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mp_trackme_startup</span><span class='op'>(</span><span class='va'>package</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>mp_trackme_startup</span><span class='op'>(</span><span class='va'>package</span>, <span class='va'>opt_in_function</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,6 +153,10 @@
     <tr>
       <th>package</th>
       <td><p>The package to set-up tracking for</p></td>
+    </tr>
+    <tr>
+      <th>opt_in_function</th>
+      <td><p>The name of the function for a user to opt-in</p></td>
     </tr>
     </table>
 

@@ -13,6 +13,9 @@
     <loc>https://code.markedmondson.me/measurementProtocol//reference/mp_event_item.html</loc>
   </url>
   <url>
+    <loc>https://code.markedmondson.me/measurementProtocol//reference/mp_opt_in.html</loc>
+  </url>
+  <url>
     <loc>https://code.markedmondson.me/measurementProtocol//reference/mp_send.html</loc>
   </url>
   <url>
@@ -20,5 +23,11 @@
   </url>
   <url>
     <loc>https://code.markedmondson.me/measurementProtocol//reference/mp_trackme_startup.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/measurementProtocol//articles/measurement-protocol-v2.html</loc>
+  </url>
+  <url>
+    <loc>https://code.markedmondson.me/measurementProtocol//articles/package-tracking.html</loc>
   </url>
 </urlset>
