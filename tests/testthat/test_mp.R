@@ -46,5 +46,21 @@ test_that("Measurement Protocol Hits",{
               items = items)
   expect_snapshot(event1)
 
+  # error item
+  expect_error(
+    mp_event_item(coupon = "this_will_error")
+  )
+
+  expect_equal(class(mp_cid()), "character")
+
+  a_trackme_event <- mp_trackme_event("measurementProtocol",
+                                      debug_call = TRUE,
+                                      say_hello = "hello")
+  expect_true(a_trackme_event)
+
+  expect_message(mp_trackme_event("measurementProtocol",
+                                  debug_call = TRUE, say_hello = "hello"),
+                 "MP Request")
+
 
 })
