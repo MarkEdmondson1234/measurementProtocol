@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   measurement-protocol-v2: measurement-protocol-v2.html
   package-tracking: package-tracking.html
-last_built: 2021-04-09T14:36Z
+last_built: 2021-04-09T16:47Z
 urls:
   reference: https://code.markedmondson.me/measurementProtocol//reference
   article: https://code.markedmondson.me/measurementProtocol//articles
