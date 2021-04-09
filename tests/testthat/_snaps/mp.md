@@ -73,3 +73,25 @@
         }
       } 
 
+---
+
+    Code
+      custom_connection
+    Output
+      $measurement_id
+      [1] "G-43MDXK6CLZ"
+      
+      $api_secret
+      [1] "MY_SECRET"
+      
+      $endpoint
+      [1] "https://gtm.custom.com"
+      
+      $preview_header
+      <request>
+      Headers:
+      * X-Gtm-Server-Preview: XXXX
+      
+      attr(,"class")
+      [1] "mp_connection"
+

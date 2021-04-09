@@ -1,5 +1,5 @@
 ---
-title: "Measurement Protocol v2"
+title: "Measurement Protocol v2 for R server-side tracking in GA4"
 ---
 
 

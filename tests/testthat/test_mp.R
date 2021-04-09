@@ -51,7 +51,7 @@ test_that("Measurement Protocol Hits",{
     mp_event_item(coupon = "this_will_error")
   )
 
-  expect_equal(class(mp_cid()), "character")
+  expect_equal(class(mp_cid(1)), "character")
 
   a_trackme_event <- mp_trackme_event("measurementProtocol",
                                       debug_call = TRUE,
@@ -61,6 +61,28 @@ test_that("Measurement Protocol Hits",{
   expect_message(mp_trackme_event("measurementProtocol",
                                   debug_call = TRUE, say_hello = "hello"),
                  "MP Request")
+
+  # custom connection
+  custom_connection <- mp_connection(
+    my_measurement_id,
+    endpoint = "https://gtm.custom.com",
+    preview_header = "XXXX"
+  )
+  expect_snapshot(custom_connection)
+
+  expect_error(
+    mp_connection(
+      my_measurement_id,
+      endpoint = "gtm.custom.com",
+      preview_header = "XXXX"
+    )
+  )
+
+  # error send
+  expect_error(
+    mp_send(list("error"), client_id = 12324, connection = my_connection)
+  )
+
 
 
 })

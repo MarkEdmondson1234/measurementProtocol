@@ -6,9 +6,9 @@
 #'
 #' This is the opt-in function for this package, using [mp_trackme]
 #' @export
-mp_opt_in <- function(){
+mp_opt_in <- function(){ # nocov start
   mp_trackme("measurementProtocol")
-}
+} # nocov end
 
 get_trackme_file <- function(package){
   file.path(rappdirs::user_config_dir(package), "optin-tracking")
@@ -31,7 +31,7 @@ get_trackme_file <- function(package){
 #' @import assertthat
 #' @importFrom cli cli_h1 cli_alert_info
 #' @importFrom utils menu
-mp_trackme <- function(package){
+mp_trackme <- function(package){ # nocov start
 
   assert_that(is.string(package), nzchar(package))
 
@@ -77,7 +77,7 @@ mp_trackme <- function(package){
 
   cli::cli_alert_info(
     "No worries! If you change your mind run this function again.")
-}
+} # nocov end
 
 #' Package tracking opt-in start-up message
 #'
@@ -86,7 +86,7 @@ mp_trackme <- function(package){
 #' @param opt_in_function The name of the function for a user to opt-in
 #' @export
 #' @import assertthat
-mp_trackme_startup <- function(package, opt_in_function){
+mp_trackme_startup <- function(package, opt_in_function){ # nocov start
 
   if(is.null(opt_in_function)){
     opt_in_function <- "measurementProtocol::mp_trackme"
@@ -103,9 +103,7 @@ mp_trackme_startup <- function(package, opt_in_function){
               package, opt_in_function)
     )
   }
-}
-
-
+} # nocov end
 
 #' Send a tracking hit for R package statistics
 #'
@@ -216,7 +214,7 @@ trackme_event <- function(package,
     return(mp_send(event, client_id = cid,
                    connection = my_conn,
                    debug_call = TRUE))
-  }
+  } # nocov start
   suppressMessages(
     mp_send(event, client_id = cid,
             connection = my_conn,
@@ -224,4 +222,5 @@ trackme_event <- function(package,
   )
 
   cli::cli_alert_success("Sent library load tracking event")
+  # nocov end
 }

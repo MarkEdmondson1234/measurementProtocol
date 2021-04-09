@@ -10,6 +10,7 @@
 #'
 #' @export
 #' @family Measurement Protocol functions
+#' @import assertthat
 #' @examples
 #'
 #' mp_event("custom_event")
@@ -17,6 +18,9 @@
 mp_event <- function(name, params = NULL, items = NULL){
 
   if(!is.null(items)){
+    item_checks <- unlist(lapply(items, is.mp_event_item))
+    assert_that(all(item_checks))
+
     params <- c(params, list(items = items))
   }
 

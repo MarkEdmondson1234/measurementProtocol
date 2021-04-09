@@ -23,7 +23,7 @@ remotes::install_github("MarkEdmondson1234/measurementProtocol")
 
 ## Usage 
 
-Documentation on `googleAnalyticsR` dev website: https://code.markedmondson.me/googleAnalyticsR/dev/articles/measurement-protocol-v2.html
+See the documentation on the `measurementProtocol` website: https://code.markedmondson.me/measurementProtocol/
 
 You need a [GA4 account](https://support.google.com/analytics/answer/10089681?hl=en) to send the hits to.
 
