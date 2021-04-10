@@ -7,3 +7,4 @@
 ^cloud_build$
 ^vignettes$
 ^cran-comments\.md$
+^CRAN-RELEASE$

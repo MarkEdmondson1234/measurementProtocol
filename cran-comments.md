@@ -8,3 +8,7 @@
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
+* Possibly mis-spelled words in DESCRIPTION:
+  Analytics (4:39, 6:64)
+  analytics (8:37)
+It is spelt correctly

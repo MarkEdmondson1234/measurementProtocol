@@ -11,7 +11,7 @@ This library enables the ability to use the API from R.
 
 It also includes functions to use the measurement protocol to track events such as R library loads for package usage analytics.  
 
-Complement the package with [googleAnalyticsR](https://code.markedmondson.me/googleAnalyticsR) to read the data you send. 
+Complement the package with [googleAnalyticsR](https://code.markedmondson.me/googleAnalyticsR/) to read the data you send. 
 
 ## Install
 
