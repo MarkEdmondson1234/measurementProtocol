@@ -1,7 +1,7 @@
 Package: measurementProtocol
 Type: Package
 Version: 0.1.0
-Title: Send Data from R to the Measurement Protocol version 2
+Title: Send Data from R to the Measurement Protocol
 Description: Send server-side tracking data from R.
   The Measurement Protocol version 2 
   <https://developers.google.com/analytics/devguides/collection/protocol/ga4>
