@@ -6,3 +6,4 @@
 ^\.github$
 ^cloud_build$
 ^vignettes$
+^cran-comments\.md$
