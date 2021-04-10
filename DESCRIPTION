@@ -1,6 +1,6 @@
 Package: measurementProtocol
 Type: Package
-Version: 0.0.0.9000
+Version: 0.1.0
 Title: Send data from R to the Google Analytics 4 Measurement Protocol v2 
 Description: Use R to send server-side tracking data to Google Analytics 4 
   <https://developers.google.com/analytics/devguides/collection/protocol/ga4>.
