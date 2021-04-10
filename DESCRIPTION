@@ -22,7 +22,6 @@ Imports:
     stats,
     utils
 License: MIT + file LICENSE
-LazyData: TRUE
 RoxygenNote: 7.1.1
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
