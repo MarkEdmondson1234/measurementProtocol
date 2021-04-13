@@ -9,8 +9,19 @@ mp_cid(seed = NULL)
 \arguments{
 \item{seed}{If you set a seed, then the random number will be the same for each value}
 }
+\value{
+A string suitable as an Id with a random number plus a timestamp delimited by a period.
+}
 \description{
 This has a random number plus a timestamp
+}
+\examples{
+
+# random Id
+mp_cid()
+
+# fix the random number (but not the timestamp)
+mp_cid(1)
 }
 \seealso{
 Other Measurement Protocol functions: 

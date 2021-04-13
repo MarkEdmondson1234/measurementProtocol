@@ -13,6 +13,9 @@ mp_event(name, params = NULL, items = NULL)
 
 \item{items}{Optional items created via \link{mp_event_item}}
 }
+\value{
+An \code{mp_event} object
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 This creates an event to send via \link{mp_send}

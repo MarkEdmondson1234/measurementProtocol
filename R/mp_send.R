@@ -13,6 +13,8 @@
 #' @param user_properties Optional. The user properties for the measurement sent in as a named list.
 #' @param non_personalized_ads Optional. Set to true to indicate these events should not be used for personalized ads.
 #'
+#' @returns \code{TRUE} if successfully sent the hit.  If \code{debug_call=TRUE} then the JSON response from the debugger endpoint
+#'
 #' @details
 #'
 #' Create an API secret via `Admin > Data Streams > choose your stream > Measurement Protocol > Create`
@@ -157,6 +159,9 @@ mp_send <- function(
 #' @param measurement_id The measurement ID associated with a stream
 #' @param endpoint If NULL will use Google default, otherwise set to the URL of your Measurement Protocol custom endpoint
 #' @param preview_header Only needed for custom endpoints. The `X-Gtm-Server-Preview` HTTP Header found in your GTM debugger
+#'
+#' @returns An \code{mp_connection} class object
+#'
 #' @export
 #' @examples
 #'

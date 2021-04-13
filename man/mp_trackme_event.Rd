@@ -23,6 +23,9 @@ mp_trackme_event(
 
 \item{opt_in_function}{The name of the function for a user to opt-in}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 You can opt-in or out to sending a measurement protocol hit when you load the package for use in the package's statistics via this function.  No personal data is collected.
 

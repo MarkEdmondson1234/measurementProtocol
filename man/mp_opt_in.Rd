@@ -6,6 +6,9 @@
 \usage{
 mp_opt_in()
 }
+\value{
+No return value, called for side effects
+}
 \description{
 This is the opt-in function for this package, using \link{mp_trackme}
 }

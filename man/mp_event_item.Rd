@@ -38,6 +38,9 @@ mp_event_item(
 
 \item{currency}{Currency}
 }
+\value{
+An \code{mp_event_item} object
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Some events work with item properties

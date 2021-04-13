@@ -49,7 +49,11 @@ mp_connection(
 \item{preview_header}{Only needed for custom endpoints. The \code{X-Gtm-Server-Preview} HTTP Header found in your GTM debugger}
 }
 \value{
+\code{TRUE} if successfully sent the hit.  If \code{debug_call=TRUE} then the JSON response from the debugger endpoint
+
 \code{TRUE} if successful, if \code{debug_call=TRUE} then validation messages if not a valid hit.
+
+An \code{mp_connection} class object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

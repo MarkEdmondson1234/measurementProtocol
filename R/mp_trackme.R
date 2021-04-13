@@ -5,6 +5,7 @@
 #' Tracking opt-in for this package
 #'
 #' This is the opt-in function for this package, using [mp_trackme]
+#' @returns No return value, called for side effects
 #' @export
 mp_opt_in <- function(){ # nocov start
   mp_trackme("measurementProtocol")
@@ -21,6 +22,7 @@ get_trackme_file <- function(package){
 #' @export
 #' @rdname mp_trackme_event
 #' @param package The package you want to track
+#'
 #'
 #' @examples
 #'
@@ -84,8 +86,9 @@ mp_trackme <- function(package){ # nocov start
 #' Place in .onAttach to have a message appear on first start-up
 #' @param package The package to set-up tracking for
 #' @param opt_in_function The name of the function for a user to opt-in
-#' @export
+#' @returns No return value, called for side effects
 #' @import assertthat
+#' @noRd
 mp_trackme_startup <- function(package, opt_in_function){ # nocov start
 
   if(is.null(opt_in_function)){
@@ -114,7 +117,7 @@ mp_trackme_startup <- function(package, opt_in_function){ # nocov start
 #' @param opt_in_function The name of the function for a user to opt-in
 #' @param debug_call Set as a debug event to see what would be sent
 #' @param say_hello If you want to add your own custom message to the event sent, add it here!
-#'
+#' @returns No return value, called for side effects
 #' @export
 #'
 #' @examples

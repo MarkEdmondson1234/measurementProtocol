@@ -8,7 +8,8 @@ Description: Send server-side tracking data from R.
   allows sending HTTP tracking events from R code.
 Authors@R: c(person("Mark", "Edmondson", email = "r@sunholo.com",
                   role = c("aut", "cre"),
-                  comment = c(ORCID = "0000-0002-8434-3881")))
+                  comment = c(ORCID = "0000-0002-8434-3881")),
+              person("Sunholo Ltd", role = "cph"))
 URL: https://code.markedmondson.me/measurementProtocol/
 BugReports: https://github.com/MarkEdmondson1234/measurementProtocol
 Depends:

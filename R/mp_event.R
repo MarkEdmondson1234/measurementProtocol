@@ -8,6 +8,8 @@
 #' @param params Optional event parameters sent in as a named list
 #' @param items Optional items created via [mp_event_item]
 #'
+#' @returns An \code{mp_event} object
+#'
 #' @export
 #' @family Measurement Protocol functions
 #' @import assertthat
@@ -58,6 +60,8 @@ print.mp_event <- function(x, ...){
 #' @param item_variant Variant
 #' @param price Price
 #' @param currency Currency
+#'
+#' @returns An \code{mp_event_item} object
 #'
 #' @export
 #' @family Measurement Protocol functions
@@ -133,9 +137,16 @@ print.mp_event_item <- function(x, ...){
 #' This has a random number plus a timestamp
 #'
 #' @param seed If you set a seed, then the random number will be the same for each value
-#'
+#' @returns A string suitable as an Id with a random number plus a timestamp delimited by a period.
 #' @export
 #' @family Measurement Protocol functions
+#' @examples
+#'
+#' # random Id
+#' mp_cid()
+#'
+#' # fix the random number (but not the timestamp)
+#' mp_cid(1)
 mp_cid <- function(seed = NULL){
 
   if(!is.null(seed)){
