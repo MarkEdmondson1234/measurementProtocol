@@ -1,6 +1,7 @@
 # measurementProtocol - an R library for sending server-side data to Google Analytics 4
 
 <!-- badges: start -->
+[![CRAN](http://www.r-pkg.org/badges/version/measurementProtocol)](http://cran.r-project.org/package=measurementProtocol)
 ![CloudBuild](https://badger-ewjogewawq-ew.a.run.app/build/status?project=mark-edmondson-gde&id=8d88c387-66f1-4ae4-a202-c1cace1fd71f)
 [![codecov](https://codecov.io/gh/MarkEdmondson1234/measurementProtocol/branch/master/graph/badge.svg)](https://codecov.io/gh/MarkEdmondson1234/measurementProtocol)
 <!-- badges: end -->

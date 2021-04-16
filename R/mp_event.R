@@ -8,7 +8,7 @@
 #' @param params Optional event parameters sent in as a named list
 #' @param items Optional items created via [mp_event_item]
 #'
-#' @returns An \code{mp_event} object
+#' @returns An `mp_event` object
 #'
 #' @export
 #' @family Measurement Protocol functions
@@ -61,7 +61,7 @@ print.mp_event <- function(x, ...){
 #' @param price Price
 #' @param currency Currency
 #'
-#' @returns An \code{mp_event_item} object
+#' @returns An `mp_event_item` object
 #'
 #' @export
 #' @family Measurement Protocol functions
@@ -74,19 +74,19 @@ print.mp_event <- function(x, ...){
 #' # many items in a list
 #' items <- list(
 #'   mp_event_item(item_id = "SKU_12345",
-#'                    price = 9.99,
-#'                    item_brand = "Gucci"),
+#'                 price = 9.99,
+#'                 item_brand = "Gucci"),
 #'   mp_event_item(item_name = "jeggings",
-#'                    price = 8.88,
-#'                    item_variant = "Black"))
+#'                 price = 8.88,
+#'                 item_variant = "Black"))
 #'
 #' # construct an event with its own fields
 #' mp_event("add_payment_info",
-#'             params = list(coupon = "SUMMER_FUN",
-#'                           payment_type = "Credit Card",
-#'                           value = 7.77,
-#'                           currency = "USD"),
-#'             items = items)
+#'          params = list(coupon = "SUMMER_FUN",
+#'                        payment_type = "Credit Card",
+#'                        value = 7.77,
+#'                        currency = "USD"),
+#'          items = items)
 #'
 mp_event_item <- function(
   item_id = NULL,
@@ -128,7 +128,7 @@ is.mp_event_item <- function(x){
 
 #' @export
 print.mp_event_item <- function(x, ...){
-  cat("==GA4 MP Event Item\n")
+  cat("\n==GA4 MP Event Item\n")
   print(jsonlite::toJSON(x, pretty = TRUE, auto_unbox = TRUE))
 }
 
