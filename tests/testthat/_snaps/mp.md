@@ -15,6 +15,7 @@
     Code
       it1
     Output
+      
       ==GA4 MP Event Item
       {
         "item_name": "jeggings",
@@ -28,6 +29,7 @@
       items
     Output
       [[1]]
+      
       ==GA4 MP Event Item
       {
         "item_id": "SKU_12345",
@@ -36,6 +38,7 @@
       } 
       
       [[2]]
+      
       ==GA4 MP Event Item
       {
         "item_name": "jeggings",
