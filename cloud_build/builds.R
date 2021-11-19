@@ -11,8 +11,9 @@ cr_deploy_packagetests(
   trigger_repo = cr_buildtrigger_repo(repo,branch = "^master$")
 )
 
+
 cr_deploy_docker_trigger(
   repo = cr_buildtrigger_repo(repo),
-  image = "measurementProtocol",
+  image = "measurementProtocol", # forced down to be lowercase
   projectId_target = "gcer-public"
 )
