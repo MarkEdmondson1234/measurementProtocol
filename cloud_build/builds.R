@@ -9,3 +9,9 @@ cr_deploy_packagetests(
   cloudbuild_file = "cloud_build/testthat.yml",
   trigger_repo = cr_buildtrigger_repo(repo,branch = "^master$")
 )
+
+cr_deploy_docker_trigger(
+  repo = cr_buildtrigger_repo(repo),
+  image = "measurementProtocol",
+  projectId = "gcer-public"
+)
