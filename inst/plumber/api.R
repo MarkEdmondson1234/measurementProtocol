@@ -22,9 +22,11 @@ function(req, ga_id, debug = 0) {
 
   pubsub_data <- jsonlite::fromJSON(req$postBody)
 
-  message(pubsub_data)
-
-  if(is.null(pubsub_data$message)) stop("No message found in pub/sub event")
+  if(is.null(pubsub_data$message) ||
+     is.null(pubsub_data$message$data)){
+       res$status <- 400 # bad request
+       return(list(error="Pub/Sub Message Data was invalid"))
+     }
 
   message <- pubsub_data$message
 
@@ -49,5 +51,5 @@ function(req, ga_id, debug = 0) {
   # curl -X POST "http://127.0.0.1:3932/gtm?gtm_id=dfdsfsf" \
   #     -H "accept: application/json" -d '{"event_name":"hi"}'
 
-  parsed
+  "OK"
 }
