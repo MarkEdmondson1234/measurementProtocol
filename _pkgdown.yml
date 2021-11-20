@@ -2,11 +2,6 @@ title: "measurementProtocol"
 url: https://code.markedmondson.me/measurementProtocol/
 development:
   mode: auto
-template:
-  opengraph:
-    twitter:
-        creator: "@HoloMarkeD"
-        card: summary_large_image
 authors:
   name: Mark Edmondson
   href: https://code.markedmondson.me
@@ -16,6 +11,10 @@ template:
   params:
     bootswatch: paper
     ganalytics: UA-47480439-2
+  opengraph:
+    twitter:
+        creator: "@HoloMarkeD"
+        card: summary_large_image
 navbar:
   title: measurementProtocol
   inverse: true

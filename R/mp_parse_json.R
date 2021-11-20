@@ -21,13 +21,13 @@
 #'
 #'
 #' # extract the event_name
-#' name_f <- \(x) x[["event_name"]]
+#' name_f <- function(x) x[["event_name"]]
 #'
 #' # extract client_id
-#' client_id_f <- \(x) x[["client_id"]]
+#' client_id_f <- function(x) x[["client_id"]]
 #'
 #' # extract user_id
-#' user_id_f <- \(x) x[["user_id"]]
+#' user_id_f <- function(x) x[["user_id"]]
 #'
 #' # simple event
 #' mp_parse_json(demo_list,
@@ -151,9 +151,9 @@ mp_parse_json <- function(json,
 #'         debug_call = TRUE)
 mp_parse_gtm <- function(json){
 
-  name_f <- \(x) x[["event_name"]]
-  client_id_f <- \(x) x[["client_id"]]
-  user_id_f <- \(x) x[["user_id"]]
+  name_f <- function(x) x[["event_name"]]
+  client_id_f <- function(x) x[["client_id"]]
+  user_id_f <- function(x) x[["user_id"]]
 
   # params could be assumed to be everything not a event_name of client_id
   # also not allowed any starting with reserved 'ga_'
