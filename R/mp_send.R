@@ -215,3 +215,11 @@ mp_connection <- function(measurement_id,
 is.mp_connection <- function(x){
   inherits(x, "mp_connection")
 }
+
+#' @export
+print.mp_connection <- function(x, ...){
+  cat("\n==GA4 MP Connection\n")
+  cat("Measurement ID:  ", x$measurement_id)
+  cat("\nAPI Secret:       <OBSCURED in .Renviron MP_SECRET>")
+  cat("\nEndpoint:        ", x$endpoint)
+}
