@@ -15,5 +15,6 @@ cr_deploy_packagetests(
 cr_deploy_docker_trigger(
   repo = cr_buildtrigger_repo(repo),
   image = "measurementProtocol", # forced down to be lowercase
-  projectId_target = "gcer-public"
+  projectId_target = "gcer-public",
+  timeout = 3600
 )
