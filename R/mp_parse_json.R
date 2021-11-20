@@ -86,7 +86,7 @@ mp_parse_json <- function(json,
 
   myMessage("Received JSON:",
             jsonlite::toJSON(json, pretty = TRUE, auto_unbox = TRUE),
-            level = 3)
+            level = 2)
 
   assert_that(is.function(name_f))
 

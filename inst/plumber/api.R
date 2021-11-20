@@ -32,7 +32,7 @@ function(req, ga_id, debug = 0) {
 
   the_data <- rawToChar(jsonlite::base64_dec(message$data))
 
-  parsed <- mp_parse_gtm(the_data)
+  parsed <- suppressMessages(mp_parse_gtm(the_data))
 
   my_connection <- mp_connection(ga_id)
 
@@ -43,13 +43,16 @@ function(req, ga_id, debug = 0) {
                   connection = my_connection,
                   debug_call = if(debug != 0) TRUE else FALSE)
 
+  message(
+    sprintf("Sending event: %s for client.id %s",
+            parsed_event$mp_event$name,
+            parsed_event$user$client_id)
+    )
+
   if(!isTRUE(sent)){
     res$status <- 400 # bad request
     return(list(error="MP hit failed to send"))
   }
-
-  # curl -X POST "http://127.0.0.1:3932/gtm?gtm_id=dfdsfsf" \
-  #     -H "accept: application/json" -d '{"event_name":"hi"}'
 
   "OK"
 }
