@@ -2,11 +2,14 @@ library(measurementProtocol)
 
 # get mp_secret from env MP_SECRET
 
-#* Echo back the input
-#* @param msg The message to echo
+#* Home page
 #* @get /
-function(msg="") {
-  list(msg = paste0("The message is: '", msg, "'"))
+function() {
+  "<html>
+    <h1>measurementProtocol + plumber</h1>
+    <p>POST to /gtm?gtm_id=G-123456<p>
+    <p>Debug via /gtm?gtm_id=G-123456&debug=1<p>
+  </html>"
 }
 
 #* Send forward a measurement protocol hit
