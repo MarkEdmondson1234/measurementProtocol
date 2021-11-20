@@ -8,8 +8,9 @@ library(measurementProtocol)
 function() {
   "<html>
     <h1>measurementProtocol + plumber</h1>
-    <p>POST to /gtm?gtm_id=G-123456<p>
-    <p>Debug via /gtm?gtm_id=G-123456&debug=1<p>
+    <p>POST to /gtm?ga_id=G-123456<p>
+    <p>Debug via /gtm?ga_id=G-123456&debug=1<p>
+    <p><a href=/__docs__/>Swagger docs</a>
   </html>"
 }
 
@@ -19,9 +20,11 @@ function() {
 #* @parser json
 function(req, ga_id, debug = 0) {
 
-  str(req)
+  message(req, ga_id)
 
   pubsub_data <- jsonlite::fromJSON(req$postBody)
+
+  message(pubsub_data)
 
   if(is.null(pubsub_data$message)) stop("No message found in pub/sub event")
 
