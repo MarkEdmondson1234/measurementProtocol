@@ -26,6 +26,8 @@ function(req, ga_id, debug = 0) {
 
   if(is.null(pubsub_data$message)) stop("No message found in pub/sub event")
 
+  message <- pubsub_data$message
+
   the_data <- rawToChar(jsonlite::base64_dec(message$data))
 
   parsed <- mp_parse_gtm(the_data)
