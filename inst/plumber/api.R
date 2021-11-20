@@ -16,11 +16,9 @@ function() {
 
 #* Send forward a measurement protocol hit
 #* @post /gtm
-#* @serializer json
+#* @serializer unboxedJSON
 #* @parser json
 function(req, ga_id, debug = 0) {
-
-  message(req, ga_id)
 
   pubsub_data <- jsonlite::fromJSON(req$postBody)
 
@@ -40,6 +38,11 @@ function(req, ga_id, debug = 0) {
                   user_properties = parsed$user$user_properties,
                   connection = my_connection,
                   debug_call = if(debug != 0) TRUE else FALSE)
+
+  if(!isTRUE(sent)){
+    res$status <- 400 # bad request
+    return(list(error="MP hit failed to send"))
+  }
 
   # curl -X POST "http://127.0.0.1:3932/gtm?gtm_id=dfdsfsf" \
   #     -H "accept: application/json" -d '{"event_name":"hi"}'
