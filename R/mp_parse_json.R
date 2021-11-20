@@ -15,6 +15,10 @@
 #' @export
 #' @import jsonlite
 #' @import assertthat
+#'
+#' @details
+#'
+#' The passed in functions should return NULL if they don't find any entries
 #' @examples
 #'
 #' demo_json <- system.file("example", "pubsub-ga4.json", package = "measurementProtocol")
@@ -97,28 +101,32 @@ mp_parse_json <- function(json,
 
   if(!is.null(params_f)){
     params <- params_f(json)
-    assert_that(is.list(params))
+    if(!is.null(params)) assert_that(is.list(params))
   }
 
   if(!is.null(items_f)){
     items <- items_f(json)
-    item_checks <- unlist(lapply(items, is.mp_event_item))
-    assert_that(all(item_checks))
+    if(!is.null(items)){
+      item_checks <- unlist(lapply(items, is.mp_event_item))
+      assert_that(all(item_checks))
+    }
+
   }
 
   if(!is.null(client_id_f)){
     client_id <-client_id_f(json)
-    assert_that(is.string(client_id))
+
+    if(!is.null(client_id)) assert_that(is.string(client_id))
   }
 
   if(!is.null(user_id_f)){
     user_id <- user_id_f(json)
-    assert_that(is.string(user_id))
+    if(!is.null(user_id)) assert_that(is.string(user_id))
   }
 
   if(!is.null(user_properties_f)){
     user_properties <- user_properties_f(json)
-    assert_that(is.list(user_properties))
+    if(!is.null(user_properties)) assert_that(is.list(user_properties))
   }
 
   structure(list(
@@ -133,7 +141,7 @@ mp_parse_json <- function(json,
       user_id = user_id,
       user_properties = user_properties
     )
-  ), class = "mp_parse_json")
+  ), class = c("mp_parse_json","list"))
 
 }
 

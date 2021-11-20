@@ -18,3 +18,9 @@ cr_deploy_docker_trigger(
   projectId_target = "gcer-public",
   timeout = 3600
 )
+
+cr_deploy_plumber(
+  "inst/plumber",
+  remote = "measurement_protocol_proxy",
+  env_vars = paste0("MP_SECRET=", Sys.getenv("MP_SECRET"))
+)

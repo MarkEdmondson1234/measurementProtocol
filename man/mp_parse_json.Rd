@@ -38,6 +38,9 @@ An \code{mp_parse_json} object that is a list of an \code{mp_event} object, and 
 \description{
 This function helps take HTTP events and rearranges its structure so it will work in a MP measurement protocol hit.  This enables HTTP events from say Pub/Sub to be translated into MP hits.
 }
+\details{
+The passed in functions should return NULL if they don't find any entries
+}
 \examples{
 
 demo_json <- system.file("example", "pubsub-ga4.json", package = "measurementProtocol")
