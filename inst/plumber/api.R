@@ -19,7 +19,9 @@ function() {
 #* @parser json
 function(req, ga_id, debug = 0) {
 
-  pubsub_data <- req$postBody
+  str(req)
+
+  pubsub_data <- jsonlite::fromJSON(req$postBody)
 
   if(is.null(pubsub_data$message)) stop("No message found in pub/sub event")
 
