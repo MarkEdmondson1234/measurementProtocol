@@ -36,18 +36,18 @@ function(req, ga_id, debug = 0) {
 
   my_connection <- mp_connection(ga_id)
 
+  message(
+    sprintf("Sending event: %s for client.id %s",
+            parsed$mp_event$name,
+            parsed$user$client_id)
+  )
+
   sent <- mp_send(parsed$mp_event,
                   client_id = parsed$user$client_id,
                   user_id = parsed$user$user_id,
                   user_properties = parsed$user$user_properties,
                   connection = my_connection,
                   debug_call = if(debug != 0) TRUE else FALSE)
-
-  message(
-    sprintf("Sending event: %s for client.id %s",
-            parsed_event$mp_event$name,
-            parsed_event$user$client_id)
-    )
 
   if(!isTRUE(sent)){
     res$status <- 400 # bad request
