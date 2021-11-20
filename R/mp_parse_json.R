@@ -2,6 +2,7 @@
 #'
 #' This function helps take HTTP events and rearranges its structure so it will work in a MP measurement protocol hit.  This enables HTTP events from say Pub/Sub to be translated into MP hits.
 #'
+#' @param json The location of a json file or a json string or an R list that has been parsed from json via `jsonlite::fromJSON`
 #' @param name_f The function that extracts the event name out of `json`
 #' @param params_f An optional function that extracts parameters for the event from `json`
 #' @param items_f An optional function that extracts e-commerce items from `json`. Must return a [mp_event_item] object.  you may not need this if the `params_f` includes parsing of e-commerce items

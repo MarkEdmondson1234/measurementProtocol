@@ -18,6 +18,8 @@ mp_parse_json(
 mp_parse_gtm(json)
 }
 \arguments{
+\item{json}{The location of a json file or a json string or an R list that has been parsed from json via \code{jsonlite::fromJSON}}
+
 \item{name_f}{The function that extracts the event name out of \code{json}}
 
 \item{params_f}{An optional function that extracts parameters for the event from \code{json}}
