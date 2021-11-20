@@ -36,7 +36,7 @@ bs <- c(
   ),
   cr_buildstep_run(
     "measurement-protocol-proxy",
-    image = "gcr.io/$PROJECT_ID/measurement-protocol-proxy$BUILD_ID",
+    image = "gcr.io/$PROJECT_ID/measurement-protocol-proxy:$BUILD_ID",
     env_vars = paste0("MP_SECRET=", Sys.getenv("MP_SECRET"))
   )
 )

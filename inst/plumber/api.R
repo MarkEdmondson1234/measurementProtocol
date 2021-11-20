@@ -4,6 +4,7 @@ library(measurementProtocol)
 
 #* Home page
 #* @get /
+#* @serializer html
 function() {
   "<html>
     <h1>measurementProtocol + plumber</h1>
@@ -16,10 +17,17 @@ function() {
 #* @post /gtm
 #* @serializer json
 #* @parser json
-function(req, gtm_id, debug = 0) {
-  parsed <- mp_parse_gtm(req$postBody)
+function(req, ga_id, debug = 0) {
 
-  my_connection <- mp_connection(gtm_id)
+  pubsub_data <- req$postBody
+
+  if(is.null(pubsub_data$message)) stop("No message found in pub/sub event")
+
+  the_data <- rawToChar(jsonlite::base64_dec(message$data))
+
+  parsed <- mp_parse_gtm(the_data)
+
+  my_connection <- mp_connection(ga_id)
 
   sent <- mp_send(parsed$mp_event,
                   client_id = parsed$user$client_id,
