@@ -51,7 +51,9 @@ function(req, res, ga_id, debug = 0) {
     return(list(error="Pub/Sub data parsing error"))
   }
 
-  parsed <- mp_parse_gtm(pubsub_data)
+  parsed <- suppressMessages(
+    mp_parse_gtm(pubsub_data)
+    )
 
   my_connection <- mp_connection(ga_id)
 
