@@ -3,6 +3,7 @@
 \name{mp_parse_json}
 \alias{mp_parse_json}
 \alias{mp_parse_gtm}
+\alias{mp_pubsub}
 \title{Parse out objects into the Measurement Protocol v2 format for sending}
 \usage{
 mp_parse_json(
@@ -16,6 +17,8 @@ mp_parse_json(
 )
 
 mp_parse_gtm(json)
+
+mp_pubsub(pubsub_body)
 }
 \arguments{
 \item{json}{The location of a json file or a json string or an R list that has been parsed from json via \code{jsonlite::fromJSON}}
@@ -31,9 +34,13 @@ mp_parse_gtm(json)
 \item{user_id_f}{Optionally include a function that will parse out user_id}
 
 \item{user_properties_f}{Optionally include a function that will parse out user properties}
+
+\item{pubsub_body}{The req$postBody of a plumber request}
 }
 \value{
 An \code{mp_parse_json} object that is a list of an \code{mp_event} object, and \code{user} fields including client.id, user.id and user properties
+
+The Pub/Sub message "data" attribute unencoded into a json string
 }
 \description{
 This function helps take HTTP events and rearranges its structure so it will work in a MP measurement protocol hit.  This enables HTTP events from say Pub/Sub to be translated into MP hits.
@@ -103,4 +110,30 @@ mp_send(pubsub_event$mp_event,
         user_properties = pubsub_event$user$user_properties,
         connection = my_connection,
         debug_call = TRUE)
+
+\dontrun{
+
+#* Send forward a measurement protocol hit
+#* @post /gtm
+#* @serializer unboxedJSON
+#* @parser json
+function(req, res, ga_id) {
+
+  pubsub_data <- mp_pubsub_parse(req$postBody)
+
+  parsed <- mp_parse_gtm(pubsub_data)
+
+  my_connection <- mp_connection(ga_id)
+
+  mp_send(parsed$mp_event,
+          client_id = parsed$user$client_id,
+          user_id = parsed$user$user_id,
+          user_properties = parsed$user$user_properties,
+          connection = my_connection)
+
+  "OK"
+  }
+
+
+}
 }

@@ -179,3 +179,60 @@ mp_parse_gtm <- function(json){
                 user_id_f = user_id_f)
 
 }
+
+#' Parse Pub/Sub responses in plumber files
+#'
+#' @param pubsub_body The req$postBody of a plumber request
+#'
+#' @return The Pub/Sub message "data" attribute unencoded into a json string
+#' @export
+#' @rdname mp_parse_json
+#' @examples
+#'
+#' \dontrun{
+#'
+#' #* Send forward a measurement protocol hit
+#' #* @post /gtm
+#' #* @serializer unboxedJSON
+#' #* @parser json
+#' function(req, res, ga_id) {
+#'
+#'   pubsub_data <- mp_pubsub_parse(req$postBody)
+#'
+#'   parsed <- mp_parse_gtm(pubsub_data)
+#'
+#'   my_connection <- mp_connection(ga_id)
+#'
+#'   mp_send(parsed$mp_event,
+#'           client_id = parsed$user$client_id,
+#'           user_id = parsed$user$user_id,
+#'           user_properties = parsed$user$user_properties,
+#'           connection = my_connection)
+#'
+#'   "OK"
+#'   }
+#'
+#'
+#' }
+mp_pubsub <- function(pubsub_body){
+  pubsub_data <- NULL
+  if(!is.null(pubsub_body) && nzchar(pubsub_body)){
+    pubsub_data <- jsonlite::fromJSON(pubsub_body)
+  }
+
+  if(is.null(pubsub_data$message) ||
+     is.null(pubsub_data$message$data)){
+    message("Pub/Sub Message Data was invalid")
+    return(FALSE)
+  }
+
+  message <- pubsub_data$message
+
+  cat(as.character(Sys.time()),
+      "-pubsub-message_id-",
+      message$message_id,"-",
+      message$publish_time,"-\n")
+
+  rawToChar(jsonlite::base64_dec(message$data))
+
+}
