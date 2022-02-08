@@ -1,0 +1,11 @@
+pandoc: 2.14.0.3
+pkgdown: 2.0.2
+pkgdown_sha: ~
+articles:
+  measurement-protocol-v2: measurement-protocol-v2.html
+  package-tracking: package-tracking.html
+last_built: 2022-02-08T08:52Z
+urls:
+  reference: https://code.markedmondson.me/measurementProtocol/reference
+  article: https://code.markedmondson.me/measurementProtocol/articles
+
