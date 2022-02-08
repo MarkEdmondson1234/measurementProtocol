@@ -16,7 +16,13 @@ Complement the package with [googleAnalyticsR](https://code.markedmondson.me/goo
 
 ## Install
 
-Not yet on CRAN.  From GitHub:
+Install from CRAN
+
+```{r}
+install.packages("measurementProtocol")
+```
+
+Dev version from GitHub:
 
 ```{r}
 remotes::install_github("MarkEdmondson1234/measurementProtocol")
