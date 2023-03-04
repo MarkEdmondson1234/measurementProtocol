@@ -1,6 +1,6 @@
 Package: measurementProtocol
 Type: Package
-Version: 0.1.0.9000
+Version: 0.1.1
 Title: Send Data from R to the Measurement Protocol
 Description: Send server-side tracking data from R.
   The Measurement Protocol version 2 

@@ -173,7 +173,6 @@ trackme_event <- function(package,
 
   the_file <- get_trackme_file(package)
   if(!file.exists(the_file) & !debug_call){
-    myMessage("No consent file found", level = 2)
     mp_trackme_startup(package, opt_in_function = opt_in_function)
     return(FALSE)
   }
